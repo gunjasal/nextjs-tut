@@ -1,0 +1,11 @@
+name: nextjs-dashboard
+services:
+  postgresql-db:
+    image: postgres:latest
+    platform: linux/amd64
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - POSTGRES_DB=nextjs_dashboard
