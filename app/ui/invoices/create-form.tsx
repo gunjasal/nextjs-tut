@@ -16,7 +16,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createInvoice, initialState);
 
-  // todo ymkim: to client validation / server validation inits inputs
+  // todo ymkim: to client validation / server validation initsopenssl rand -base64 32 inputs
   return (
     <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
