@@ -20,9 +20,7 @@ export default function Page({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = 50; // await fetchInvoicesPages(query);
-
-  console.log("## query currentPage: ", query, ",", currentPage);
+  const totalPages = 50;
 
   return (
     <div className="w-full">
@@ -33,7 +31,6 @@ export default function Page({
         <Search placeholder="Search invoices..."/>
         <CreatePhoto/>
       </div>
-      {/* todo ymkim why skeleton not appears at first? */}
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton/>}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>

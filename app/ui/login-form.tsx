@@ -38,6 +38,7 @@ export default function LoginForm() {
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
+                defaultValue="user@nextmail.com"
                 required
               />
               <AtSymbolIcon

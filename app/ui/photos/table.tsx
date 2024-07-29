@@ -8,34 +8,14 @@ import { fetchFilteredInvoices } from '@/app/lib/data';
 import {usePhotos} from "@/service/photo/usePhotoService";
 import {useEffect, useState} from "react";
 
-// todo ymkim:
-//  - without async no suspense fallback
-//  - with async screen re-renders with same content twice
-//    A component was suspended by an uncached promise. Creating promises inside a Client Component or hook is not yet supported, except via a Suspense-compatible library or framework.
 export default function PhotosTable({
-// export default async function PhotosTable({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  // todo ymkim: isStale makes loading infinite
-  // const { data: photos, isLoading, isError, isFetching, isFetched, isStale } = usePhotos(currentPage);
-  // console.log("### currentPage", currentPage, isLoading, isError, isFetching, isFetched, isStale);
-
   const { data: photos, isLoading, isError, isFetching, isFetched } = usePhotos(currentPage);
-  console.log("### currentPage", currentPage, isLoading, isError, isFetching, isFetched);
-
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // todo ymkim errorBoundary
-  if (isError) {
-    return <div>Error occurred while fetching data.</div>;
-  }
 
   return (
     <div className="mt-6 flow-root">

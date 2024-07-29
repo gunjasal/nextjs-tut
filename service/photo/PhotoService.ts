@@ -2,7 +2,6 @@ import Service from '@/service/Service';
 import {Photo} from '@/model/photo';
 
 class PhotoService extends Service {
-  // todo ymkim why called 1x times?
   getPhotos(currentPage: number) {
     return this.http.get<Photo[]>(
       `/photos?_start=${currentPage}&_limit=10`,
