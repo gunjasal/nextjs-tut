@@ -22,14 +22,14 @@ export default function SideNav() {
         <form
           action={async () => {
             'use server';
-            console.log("@@ todo ymkim when user just signed-in, clicking signout not invokes this", );
             await signOut({
-              redirect: true,
-              redirectTo: '/',
-            }); // todo works randomly (and calling /login)
+              // signout not works if redirect set
+              //   redirect: true,
+              //   redirectTo: '/dashboard',
+            });
           }}
         >
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+          <button type="submit" className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
             <PowerIcon className="w-6" />
             <div className="hidden md:block">Sign Out</div>
           </button>

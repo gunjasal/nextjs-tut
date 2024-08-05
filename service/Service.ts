@@ -58,7 +58,7 @@ class Service {
     };
   }
 
-  private async request<T = unknown>(
+  public async request<T = unknown>( // todo ymkim less-abstract
     method: string,
     url: string,
     data?: unknown,

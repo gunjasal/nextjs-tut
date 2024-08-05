@@ -1,25 +1,12 @@
 'use server';
 
-import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import {CreateInvoiceSchema, InvoiceFormSchema} from "@/schema/schema";
 
-const FormSchema = z.object({
-  id: z.string(),
-  customerId: z.string({
-    invalid_type_error: 'Please select a customer.',
-  }),
-  amount: z.coerce
-  .number()
-  .gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'Please select an invoice status.',
-  }),
-  date: z.string(),
-});
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
+
 export type State = {
   errors?: {
     customerId?: string[];
@@ -31,7 +18,7 @@ export type State = {
 
 export async function createInvoice(prevState: State, formData: FormData) {
 
-  const validatedFields = CreateInvoice.safeParse({
+  const validatedFields = CreateInvoiceSchema.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
@@ -63,7 +50,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
   redirect('/dashboard/invoices');
 }
 
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
 export async function updateInvoice(id: string, formData: FormData) {
   const { customerId, amount, status } = UpdateInvoice.parse({
     customerId: formData.get('customerId'),

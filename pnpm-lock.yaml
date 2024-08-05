@@ -11,6 +11,9 @@ importers:
       '@heroicons/react':
         specifier: ^2.1.4
         version: 2.1.4(react@19.0.0-rc-f38c22b244-20240704)
+      '@hookform/resolvers':
+        specifier: ^3.9.0
+        version: 3.9.0(react-hook-form@7.52.1(react@19.0.0-rc-f38c22b244-20240704))
       '@tailwindcss/forms':
         specifier: ^0.5.7
         version: 0.5.7(tailwindcss@3.4.4)
@@ -139,6 +142,11 @@ packages:
     resolution: {integrity: sha512-ju0wj0wwrUTMQ2Yceyrma7TKuI3BpSjp+qKqV81K9KGcUHdvTMdiwfRc2cwXBp3uXtKuDZkh0v03nWOQnJFv2Q==}
     peerDependencies:
       react: '>= 16'
+
+  '@hookform/resolvers@3.9.0':
+    resolution: {integrity: sha512-bU0Gr4EepJ/EQsH/IwEzYLsT/PEj5C0ynLQ4m+GSHS+xKH4TfSelhluTgOaoc4kA5s7eCsQbM4wvZLzELmWzUg==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -2026,6 +2034,10 @@ snapshots:
   '@heroicons/react@2.1.4(react@19.0.0-rc-f38c22b244-20240704)':
     dependencies:
       react: 19.0.0-rc-f38c22b244-20240704
+
+  '@hookform/resolvers@3.9.0(react-hook-form@7.52.1(react@19.0.0-rc-f38c22b244-20240704))':
+    dependencies:
+      react-hook-form: 7.52.1(react@19.0.0-rc-f38c22b244-20240704)
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
