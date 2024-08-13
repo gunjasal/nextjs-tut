@@ -1,7 +1,7 @@
 import Form from '@/app/ui/invoices/create-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers } from '@/app/lib/data';
-import HookForm from "@/app/ui/invoices/create-hook-form";
+import InvoiceForm from "@/app/ui/invoices/create-hook-form";
 
 export default async function Page() {
   const customers = await fetchCustomers();
@@ -19,7 +19,7 @@ export default async function Page() {
         ]}
       />
       {/*<Form customers={customers} />*/}
-      <HookForm customers={customers} />
+      <InvoiceForm customers={customers} />
     </main>
   );
 }

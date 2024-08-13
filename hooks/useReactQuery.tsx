@@ -7,9 +7,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 export default function ReactQueryProviders({ children }: React.PropsWithChildren) {
 
   // const [queryClient] = useState(() => new QueryClient());
-
-  // todo ymkim what if we need real refresh?
-  //  why staletime on CSR?
   const [queryClient] = useState(
     () =>
       new QueryClient({

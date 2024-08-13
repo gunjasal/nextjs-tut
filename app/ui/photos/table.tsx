@@ -1,12 +1,8 @@
 'use client'
 
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredInvoices } from '@/app/lib/data';
-import {usePhotos} from "@/service/photo/usePhotoService";
-import {useEffect, useState} from "react";
+import {useQuery} from "@tanstack/react-query";
+import {queryOptions} from "@/service/photo/PhotoService";
 
 export default function PhotosTable({
   query,
@@ -15,7 +11,7 @@ export default function PhotosTable({
   query: string;
   currentPage: number;
 }) {
-  const { data: photos, isLoading, isError, isFetching, isFetched } = usePhotos(currentPage);
+  const { data: photos, isLoading, isError, isFetching, isFetched } = useQuery(queryOptions.all(currentPage));
 
   return (
     <div className="mt-6 flow-root">

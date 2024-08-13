@@ -4,6 +4,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import {CreateInvoiceSchema, InvoiceFormSchema} from "@/schema/schema";
+import { Invoice } from "@/app/lib/definitions";
 
 
 
@@ -16,7 +17,28 @@ export type State = {
   message?: string | null;
 };
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createInvoiceBySubmit(invoice: Invoice) {
+
+  const { customerId, amount, status } = invoice;
+  const amountInCents = amount * 100;
+  const date = new Date().toISOString().split('T')[0];
+
+  try {
+    await sql`
+      INSERT INTO invoices (customer_id, amount, status, date)
+      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+    `;
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to Create Invoice.',
+    };
+  }
+
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
+}
+
+export async function createInvoiceByAction(prevState: State, formData: FormData) {
 
   const validatedFields = CreateInvoiceSchema.safeParse({
     customerId: formData.get('customerId'),

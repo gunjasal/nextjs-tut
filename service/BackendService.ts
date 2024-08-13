@@ -1,4 +1,3 @@
-
 interface HTTPInstance {
   get<T>(
     url: string,
@@ -33,18 +32,18 @@ interface HTTPInstance {
   ): Promise<T>;
 }
 
-class Service {
+class BackendService {
+  static _instance: BackendService;
+
   public http: HTTPInstance;
-
-  private baseURL: string;
-
-  private headers: Record<string, string>;
+  private readonly headers: Record<string, string>;
 
   constructor() {
-    this.baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+    console.log("@@ BackendService constructor");
+
     this.headers = {
       csrf: 'token',
-      Referer: this.baseURL,
+      // Referer: this.baseURL,
     };
 
     this.http = {
@@ -58,21 +57,29 @@ class Service {
     };
   }
 
-  public async request<T = unknown>( // todo ymkim less-abstract
+  static instance(): BackendService {
+    if (!BackendService._instance) {
+      BackendService._instance = new BackendService();
+    }
+
+    return BackendService._instance;
+  }
+
+  public async request<T = unknown>(
     method: string,
     url: string,
     data?: unknown,
     config?: RequestInit,
   ): Promise<T> {
     try {
-      const response = await fetch(this.baseURL + url, {
+      const response = await fetch(url, {
         method,
         headers: {
           ...this.headers,
           'Content-Type': 'application/json',
           ...config?.headers,
         },
-        credentials: 'include',
+        // credentials: 'include', // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#including_credentials
         body: data ? JSON.stringify(data) : undefined,
         ...config,
       });
@@ -81,8 +88,7 @@ class Service {
         throw new Error('Network response was not ok');
       }
 
-      const responseData: T = await response.json();
-      return responseData;
+      return await response.json();
     } catch (error) {
       console.error('Error:', error);
       throw error;
@@ -142,4 +148,4 @@ class Service {
   }
 }
 
-export default Service;
+export default BackendService.instance(); // todo ymkim // export default new BackendService() ?

@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 
-import {useActionState, useTransition} from 'react';
+import { useActionState, useState, useTransition } from 'react';
 import {CustomerField, Invoice} from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
@@ -12,12 +12,14 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import { createInvoice, State } from '@/app/lib/actions';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CreateInvoiceSchema, InvoiceFormSchema} from "@/schema/schema";
-import Service from "@/service/Service";
+import BackendService from "@/service/BackendService";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import photoService from "@/service/photo/PhotoService";
+import { createInvoiceByAction, createInvoiceBySubmit, State } from "@/app/lib/actions";
 
-export default function HookForm({ customers }: { customers: CustomerField[] }) {
+export default function InvoiceForm({ customers }: { customers: CustomerField[] }) {
   const {
     register,
     formState: { errors },
@@ -34,8 +36,7 @@ export default function HookForm({ customers }: { customers: CustomerField[] }) 
   const onSubmit = async (data: Invoice) => {
     startTransition(async () => {
       await new Promise((resolve) => setTimeout(resolve, 3000));
-      const service = new Service();
-      await service.request('POST', `/invoice`, data);
+      await createInvoiceBySubmit(data); //
     });
     console.log("##", data, "pending=", pending);
   };
@@ -164,7 +165,7 @@ export default function HookForm({ customers }: { customers: CustomerField[] }) 
           >
             Cancel
           </Link>
-          <Button type="submit">Create Invoice</Button>
+          <Button type="submit" disabled={pending} aria-disabled={pending}>Create Invoice</Button>
         </div>
       </fieldset>
     </form>
