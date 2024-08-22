@@ -16,5 +16,5 @@ export const authConfig = {
       return true;
     },
   },
-  providers: [], // todo ymkim jwt, google
+  providers: [],
 } satisfies NextAuthConfig;
